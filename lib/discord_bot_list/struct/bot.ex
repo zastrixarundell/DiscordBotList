@@ -120,6 +120,11 @@ defmodule DiscordBotList.Struct.Bot do
   use DiscordBotList.Struct
 
   def generate(token \\ nil, bot_id \\ nil) do
+    alias DiscordBotList.State
+
+    token = token || State.get_token()
+    bot_id = bot_id || State.get_bot_id()
+
     response =
       "https://top.gg/api/bots/#{bot_id}"
       |> HTTPoison.get!([{"Authorization", token}])

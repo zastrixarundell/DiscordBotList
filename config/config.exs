@@ -1,5 +1,5 @@
 use Mix.Config
 
 config :discord_bot_list,
-  token: System.get_env("DISCORD_AUTH_TOKEN"),
-  start_on_application: true
+  bot_id: System.get_env("DBL_BOT_ID"),
+  token: System.get_env("DBL_TOKEN")
