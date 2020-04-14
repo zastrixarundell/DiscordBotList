@@ -1,6 +1,6 @@
 defmodule DiscordBotList.Struct.Social do
   @moduledoc """
-  Module representing the Social media connection types of a DiscordBotList user.
+  Module representing the Social media connection types of a `DiscordBotList.Struct.User` struct.
   """
 
   defstruct [

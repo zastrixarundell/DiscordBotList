@@ -1,6 +1,10 @@
 defmodule DiscordBotList.Application do
   use Application
 
+  @moduledoc """
+  Module which represents the application. Generally isn't used apart from DiscordBotList itself.
+  """
+
   @doc false
   def start(_type, _args) do
     children = [
