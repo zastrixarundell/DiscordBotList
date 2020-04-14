@@ -1,5 +1,5 @@
 # DiscordBotList 
-![Elixir version](https://img.shields.io/static/v1?label=Elixir&message=1.10&logo=elixir&color=blueviolet&logo) [![top.gg](https://img.shields.io/badge/top.gg-visit%20here!-7289da)](https://top.gg)
+![Elixir version](https://img.shields.io/static/v1?label=Elixir&message=1.10&logo=elixir&color=blueviolet) [![top.gg](https://img.shields.io/badge/top.gg-visit%20here!-7289da)](https://top.gg)
 
 **Unofficial Elixir library for the top.gg API**
 <br>
