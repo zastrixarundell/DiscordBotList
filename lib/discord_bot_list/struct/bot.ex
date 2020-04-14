@@ -119,11 +119,72 @@ defmodule DiscordBotList.Struct.Bot do
 
   use DiscordBotList.Struct
 
-  def generate(token \\ nil, bot_id \\ nil) do
+  @spec get_multi(keyword) :: %{bots:  __MODULE__.t() | nil, count: integer | nil, limit: integer | nil, offset: integer | nil, total: integer | nil}
+  def get_multi(config \\ []) do
     alias DiscordBotList.State
 
-    token = token || State.get_token()
-    bot_id = bot_id || State.get_bot_id()
+    token  = Keyword.get(config, :token, State.get_token())
+    limit  = Keyword.get(config, :limit, 50)
+    offset = Keyword.get(config, :offset, 0)
+    search = Keyword.get(config, :search)
+    sort   = Keyword.get(config, :sort)
+    #fields = Keyword.get(config, :fields)
+
+    limit = if limit > 500, do: 500, else: limit
+
+    search =
+      if search == nil do
+        ""
+      else
+        data =
+          search
+          |> Enum.map_join(" ", fn {key, value} -> "#{key}: #{value}" end)
+
+        "&search=#{data}"
+      end
+
+    sort = if sort == nil, do: "", else: "&sort=#{sort}"
+
+    #fields = if fields == nil, do: "", else: "&fields=#{Enum.join(fields, ";")}"
+
+    response =
+      "https://top.gg/api/bots?limit=#{limit}&offset=#{offset}#{search}#{sort}" #{fields}
+      |> URI.encode()
+      |> HTTPoison.get!([{"Authorization", token}])
+
+    case response do
+      %HTTPoison.Response{status_code: 200, body: body} ->
+        {bots, limit, offset, count, total} = get_multi_data(body)
+
+        %{bots: bots, limit: limit, offset: offset, count: count, total: total || 0}
+      _ ->
+        %{bots: nil, limit: nil, offset: nil, count: nil, total: nil}
+    end
+  end
+
+  defp get_multi_data(body) do
+    json =
+      body
+      |> Jason.decode!
+
+    bots =
+      Enum.reduce json["results"], [], fn bot, hold ->
+        bot =
+          Jason.encode!(bot)
+          |> generate_from_json_string()
+
+        hold ++ [bot]
+      end
+
+    {bots, json["limit"], json["offset"], json["count"], json["total"]}
+  end
+
+  @spec get_single(config :: keyword()) :: __MODULE__.t()
+  def get_single(config \\ []) do
+    alias DiscordBotList.State
+
+    token = Keyword.get(config, :token, State.get_token())
+    bot_id = Keyword.get(config, :bot_id, State.get_bot_id())
 
     response =
       "https://top.gg/api/bots/#{bot_id}"
