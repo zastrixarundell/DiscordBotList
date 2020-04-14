@@ -48,12 +48,15 @@ defmodule DiscordBotList.Struct.BotStats do
     perform(token, id, struct, struct.shards, struct.server_count)
   end
 
+  @doc false
   defp perform(_token, _id, struct, _shards, _server_count) when is_nil(struct),
     do: {:error, :stats_are_nil}
 
+  @doc false
   defp perform(_token, _id, _struct, shards, server_count) when is_nil(server_count) and is_nil(shards),
     do: {:error, :counts_are_undefined}
 
+  @doc false
   defp perform(_token, _id, struct, _shards, _server_count) when is_struct(struct) != true,
     do: {:error, :is_not_a_struct}
 
@@ -61,6 +64,7 @@ defmodule DiscordBotList.Struct.BotStats do
   use DiscordBotList.Struct
   @behaviour DiscordBotList.Struct
 
+  @doc false
   defp perform(token, id, struct, _shards, _server_count) do
 
     struct =
@@ -107,6 +111,7 @@ defmodule DiscordBotList.Struct.BotStats do
     end
   end
 
+  @doc false
   @spec generate_from_json_string(json_string :: String.t()) :: __MODULE__.t()
   def generate_from_json_string(json_string) do
     json_string

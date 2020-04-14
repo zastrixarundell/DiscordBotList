@@ -1,6 +1,7 @@
 defmodule DiscordBotList.Application do
   use Application
 
+  @doc false
   def start(_type, _args) do
     children = [
       DiscordBotList.State

@@ -4,7 +4,7 @@ defmodule DiscordBotList do
   Main module which will be used to get and save data.
   """
 
-  alias DiscordBotList.Struct.{Bot, User, VoteUser}
+  alias DiscordBotList.Struct.{Bot, User, VoteUser, BotStats}
   alias DiscordBotList.State
 
   @doc """
@@ -77,5 +77,17 @@ defmodule DiscordBotList do
   """
   def weekend?(), do:
     DiscordBotList.Helpers.is_weekend?()
+
+  @doc """
+  Get the stats of the bot. See `DiscordBotList.Struct.BotStats.get_stats_about_bot/1` for info about the args.
+  """
+  def get_stats(config \\ []), do:
+    BotStats.get_stats_about_bot(config)
+
+  @doc """
+  Updates the stats of the bot. See `DiscordBotList.Struct.BotStats.post_updated_data/1` for info about the args.
+  """
+  def update_stats(config \\ []), do:
+    BotStats.post_updated_data(config)
 
 end
