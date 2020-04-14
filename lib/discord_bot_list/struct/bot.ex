@@ -119,7 +119,59 @@ defmodule DiscordBotList.Struct.Bot do
 
   use DiscordBotList.Struct
 
-  @spec get_multi(keyword) :: %{bots:  __MODULE__.t() | nil, count: integer | nil, limit: integer | nil, offset: integer | nil, total: integer | nil}
+  @doc """
+  Get info about a single bot. Returns `DiscordBotList.Struct.Bot` struct.
+  If you had not supplied the application already or want to override the token and id for a
+  single call, you can suplly it here.
+
+    ## Parameters
+    * `token :: String.t()`, usage: `token: your_token`
+    * `id :: String.t()` usage: `id: your_id`
+
+    ## Examples
+
+      iex> get_single()
+      iex> get_single(token: your_token, id: your_id)
+      iex> get_single(token: your_token)
+      iex> get_single(id: your_id)
+  """
+  @spec get_single(config :: keyword()) :: __MODULE__.t()
+  def get_single(config \\ []) do
+    alias DiscordBotList.State
+
+    token = Keyword.get(config, :token, State.get_token())
+    id = Keyword.get(config, :id, State.get_id())
+
+    response =
+      "https://top.gg/api/bots/#{id}"
+      |> HTTPoison.get!([{"Authorization", token}])
+
+    case response do
+      %HTTPoison.Response{status_code: 200, body: body} ->
+        generate_from_json_string(body)
+      _ ->
+        %__MODULE__{}
+    end
+  end
+
+  @doc """
+  Get info about multiple bots. You can use custom parameters here to get the
+  wanted info.
+
+    ## Parameters
+    * `token :: String.t()`, usage: `token: your_token`.
+    * `limit :: integer()` usage: `limit: 10` (default is 50, maximum is 500).
+    * `offset :: integer()` usage: `offset: 10`.
+    * `search :: keyword()` usage: `search: [username: "my_name"]`.
+    * `sort :: String.t()` usage: `sort: "id"`.
+
+    ## Examples
+
+      iex> get_multi()
+      iex> get_multi(limit: 25, offset: 5, search: [username: "Poke"])
+      iex> get_multi(limit: 10, sort: "id")
+  """
+  @spec get_multi(keyword) :: %{bots: list(__MODULE__.t()) | nil, count: integer | nil, limit: integer | nil, offset: integer | nil, total: integer | nil}
   def get_multi(config \\ []) do
     alias DiscordBotList.State
 
@@ -177,25 +229,6 @@ defmodule DiscordBotList.Struct.Bot do
       end
 
     {bots, json["limit"], json["offset"], json["count"], json["total"]}
-  end
-
-  @spec get_single(config :: keyword()) :: __MODULE__.t()
-  def get_single(config \\ []) do
-    alias DiscordBotList.State
-
-    token = Keyword.get(config, :token, State.get_token())
-    bot_id = Keyword.get(config, :bot_id, State.get_bot_id())
-
-    response =
-      "https://top.gg/api/bots/#{bot_id}"
-      |> HTTPoison.get!([{"Authorization", token}])
-
-    case response do
-      %HTTPoison.Response{status_code: 200, body: body} ->
-        generate_from_json_string(body)
-      _ ->
-        %__MODULE__{}
-    end
   end
 
   defp generate_from_json_string(json_string) do
