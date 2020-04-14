@@ -4,7 +4,7 @@ defmodule DiscordBotList do
   Main module which will be used to get and save data.
   """
 
-  alias DiscordBotList.Struct.{Bot, User}
+  alias DiscordBotList.Struct.{Bot, User, VoteUser}
   alias DiscordBotList.State
 
   @doc """
@@ -65,4 +65,11 @@ defmodule DiscordBotList do
       User.get_for_user(user_id, token)
     end
   end
+
+  @doc """
+  Get the last 1000 votes for a bot. See `DiscordBotList.Struct.VoteUser` for more info.
+  """
+  def get_votes_for_bot(config \\ []), do:
+    VoteUser.get_for_bot(config)
+
 end
