@@ -29,6 +29,15 @@ defmodule DiscordBotList.Struct.BotStats do
   @typedoc "The amount of shards the bot has."
   @type shard_count :: integer()
 
+  @doc """
+  Post the BotStats struct data to the server. You always needs to supply `stats`. To
+  override the dault token and id see `DiscordBotList.Struct.Bot.get_single/1`.
+
+    ## Examples
+    iex> data = %DiscordBotList.Struct.BotStats{server_count: 10, shard_count: 5}
+    iex> post_updated_data(stats: data)
+  """
+  @spec post_updated_data(keyword) :: {:error, String.t() | atom()} | {:ok, nil}
   def post_updated_data(config \\ []) do
     alias DiscordBotList.State
 
@@ -38,6 +47,9 @@ defmodule DiscordBotList.Struct.BotStats do
 
     perform(token, id, struct, struct.shards, struct.server_count)
   end
+
+  defp perform(_token, _id, struct, _shards, _server_count) when is_nil(struct),
+    do: {:error, :stats_are_nil}
 
   defp perform(_token, _id, _struct, shards, server_count) when is_nil(server_count) and is_nil(shards),
     do: {:error, :counts_are_undefined}
@@ -72,8 +84,36 @@ defmodule DiscordBotList.Struct.BotStats do
     end
   end
 
+  @doc """
+  Get the stats about the bot. See `DiscordBotList.Struct.Bot.get_single/1` for
+  configs in the call.
+  """
+  @spec get_stats_about_bot(keyword) :: DiscordBotList.Struct.BotStats.t()
+  def get_stats_about_bot(config \\ []) do
+    alias DiscordBotList.State
+
+    token = Keyword.get(config, :token, State.get_token())
+    id = Keyword.get(config, :id, State.get_id())
+
+    response =
+      "https://top.gg/api/bots/#{id}/stats"
+      |> HTTPoison.get!([{"Authorization", token}])
+
+    case response do
+      %HTTPoison.Response{status_code: 200, body: body} ->
+        generate_from_json_string(body)
+      _ ->
+        %__MODULE__{}
+    end
+  end
+
+  @spec generate_from_json_string(json_string :: String.t()) :: __MODULE__.t()
   def generate_from_json_string(json_string) do
-    IO.write json_string
+    json_string
+    |> Jason.decode!()
+    |> create_empty!()
+    |> add_raws([:server_count, :shards, :shard_count])
+    |> extract_struct!()
   end
 
 end
