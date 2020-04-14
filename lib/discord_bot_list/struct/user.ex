@@ -109,7 +109,6 @@ defmodule DiscordBotList.Struct.User do
   def generate_from_json_string(json_string) do
     json_string
     |> Jason.decode!
-    |> IO.inspect
     |> create_empty!()
     |> add_raws([
       :id, :username, :discriminator, :avatar, :bio,
