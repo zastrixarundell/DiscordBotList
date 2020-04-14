@@ -5,9 +5,6 @@
 <br>
 ![DBL logo](https://top.gg/assets/images/discord_v2.1225443.svg)
 
-## ***Critical information!***
-The library doesn't yet have vote webhooks!
-
 ## Installation
 You just need to add it as a hex dependency and you're good to go!
 
@@ -19,8 +16,11 @@ def deps do
 end
 ```
 
+## Documentation
+You can to [this](https://hexdocs.pm/discord_bot_list/DiscordBotList.html) link to see the hexdocs of the library as it will always be updated for the latest version of code.
+
 ## Usage examples
-The library does not yet have hexdocs but you can access the general functions from the main module! Here are a couple of examples of what you can expect (the default token and bot_id are already set in the config in these examples):
+Here are a couple of examples of what you can expect (the default token and bot_id are already set in the config in these examples):
 
 ### Getting info about the default bot via the default token and id:
 ```elixir
