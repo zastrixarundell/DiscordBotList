@@ -27,4 +27,9 @@ defmodule DiscordBotList.Struct do
     end
   end
 
+  @doc """
+  Generate the corresponding structs from a JSON string.
+  """
+  @callback generate_from_json_string(json_string :: String.t()) :: any()
+
 end

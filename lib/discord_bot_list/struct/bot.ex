@@ -118,6 +118,7 @@ defmodule DiscordBotList.Struct.Bot do
   @type donatebot_guild_id :: String.t()
 
   use DiscordBotList.Struct
+  @behaviour DiscordBotList.Struct
 
   @doc """
   Get info about a single bot. Returns `DiscordBotList.Struct.Bot` struct.
@@ -214,6 +215,7 @@ defmodule DiscordBotList.Struct.Bot do
     end
   end
 
+  @doc false
   defp get_multi_data(body) do
     json =
       body
@@ -231,7 +233,8 @@ defmodule DiscordBotList.Struct.Bot do
     {bots, json["limit"], json["offset"], json["count"], json["total"]}
   end
 
-  defp generate_from_json_string(json_string) do
+  @doc false
+  def generate_from_json_string(json_string) do
     json_string
     |> Jason.decode!
     |> create_empty!()
@@ -249,6 +252,7 @@ defmodule DiscordBotList.Struct.Bot do
     |> extract_struct!()
   end
 
+  @doc false
   defp add_date({map, struct}) do
     date =
       case map["date"] |> DateTime.from_iso8601() do
