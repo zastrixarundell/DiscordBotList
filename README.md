@@ -9,13 +9,12 @@
 The library doesn't yet have vote webhooks!
 
 ## Installation
-
-For now you can install the hex package via git.
+You just need to add it as a hex dependency and you're good to go!
 
 ```elixir
 def deps do
   [
-    {:discord_bot_list, git: "https://github.com/zastrixarundell/discordbotlist"}
+    {:discord_bot_list, "~> 1.0"}
   ]
 end
 ```
@@ -157,9 +156,4 @@ config :discord_bot_list,
   id: System.get_env("DBL_BOT_ID"),
   token: System.get_env("DBL_TOKEN")
 ```
-
-## Documentation (pending)
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/discord_bot_list](https://hexdocs.pm/discord_bot_list).
 
