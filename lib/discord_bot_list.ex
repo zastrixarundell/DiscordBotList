@@ -72,4 +72,10 @@ defmodule DiscordBotList do
   def get_votes_for_bot(config \\ []), do:
     VoteUser.get_for_bot(config)
 
+  @doc """
+  Check if it is a weekend via the DiscordBotList API.
+  """
+  def weekend?(), do:
+    DiscordBotList.Helpers.is_weekend?()
+
 end

@@ -6,7 +6,7 @@
 ![DBL logo](https://top.gg/assets/images/discord_v2.1225443.svg)
 
 ## ***Critical information!***
-The library doesn't yet have votes, vote webhooks and bot post data implemented!
+The library doesn't yet have vote webhooks and bot post data implemented!
 
 ## Installation
 
