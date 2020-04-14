@@ -1,20 +1,22 @@
-# DiscordBotList
+# DiscordBotList 
 
-**TODO: Add description**
+**Unofficial library for the top.gg API built in Elixir**
+<br>
+![DBL logo](https://top.gg/assets/images/discord_v2.1225443.svg)
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `discord_bot_list` to your list of dependencies in `mix.exs`:
+For now you can install the hex package via git.
 
 ```elixir
 def deps do
   [
-    {:discord_bot_list, "~> 0.1.0"}
+    {:discord_bot_list, git: "https://github.com/zastrixarundell/discordbotlist"}
   ]
 end
 ```
 
+## Documentation (pending)
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/discord_bot_list](https://hexdocs.pm/discord_bot_list).
