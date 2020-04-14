@@ -11,7 +11,7 @@ You just need to add it as a hex dependency and you're good to go!
 ```elixir
 def deps do
   [
-    {:discord_bot_list, "~> 1.0"}
+    {:discord_bot_list, "~> 0.1.0"}
   ]
 end
 ```
