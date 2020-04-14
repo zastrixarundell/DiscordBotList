@@ -5,6 +5,9 @@
 <br>
 ![DBL logo](https://top.gg/assets/images/discord_v2.1225443.svg)
 
+## ***Critical information!***
+The library doesn't yet have votes, vote webhooks and bot post data implemented!
+
 ## Installation
 
 For now you can install the hex package via git.
