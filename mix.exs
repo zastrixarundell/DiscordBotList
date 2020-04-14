@@ -27,7 +27,7 @@ defmodule DiscordBotList.MixProject do
 
   defp package() do
     [
-      name: "DiscordBotList",
+      name: "discord_bot_list",
       # These are the default files included in the package
       files: ~w(lib .formatter.exs mix.exs README* CHANGELOG*),
       licenses: ["Apache-2.0"],
